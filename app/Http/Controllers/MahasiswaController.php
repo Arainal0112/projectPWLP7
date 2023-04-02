@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
@@ -12,13 +13,21 @@ class MahasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //fungsi eloquent menampilkan data menggunakan pagination
-        $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
-        $posts = Mahasiswa::orderBy('nim', 'desc')->paginate(6);
-        return view('mahasiswas.index', compact('mahasiswas'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        if($request->has('nama')) {
+            $nama = request('nama');
+            $mahasiswas = Mahasiswa::where('nama', 'LIKE', '%'.$nama.'%')->paginate(5);
+            return view('mahasiswas.index', compact('mahasiswas'));
+        } else {
+            // $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
+            $mahasiswas = Mahasiswa::orderBy('nim', 'desc')->paginate(5);
+            return view('mahasiswas.index', compact('mahasiswas'))
+            ->with('i', (request()->input('page', 1) - 1) * 5); 
+        }
+        
+        
     }
 
     public function create()
@@ -116,4 +125,6 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswas.index')
         -> with('success', 'Mahasiswa Berhasil Dihapus');
     }
+
+    
 }
