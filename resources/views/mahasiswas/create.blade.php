@@ -32,12 +32,16 @@
                         <input type="Nama" name="nama" class="form-control" id="nama" aria-describedby="nama">
                     </div>
                     <div class="form-group">
-                        <label for="ttl">Tanggal Lahir</label>
-                        <input type="date" name="ttl" class="form-control" id="ttl" aria-describedby="TTL" value='2000-01-01'>
+                        <label for="tgl_lahir">Tanggal Lahir</label>
+                        <input type="date" name="tgl_lahir" class="form-control" id="tgl_lahir" aria-describedby="tgl_lahir" value='2000-01-01'>
                     </div>
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <input type="kelas" name="kelas" class="form-control" id="kelas" aria-describedby="password">
+                        <select name="kelas" class="form-control">
+                        @foreach($kelas as $Kelas)
+                            <option value={{$Kelas->id}}>{{$Kelas->nama_kelas}}</option>
+                        @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>

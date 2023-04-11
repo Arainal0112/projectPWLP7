@@ -19,4 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('mahasiswas', MahasiswaController::class); 
+// Route::resource('mahasiswas', MahasiswaController::class)->name('data_bayi');

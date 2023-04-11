@@ -33,12 +33,17 @@
                         <input type="text" name="nama" class="form-control" id="nama" value="{{ $Mahasiswa->nama }}" aria-describedby="Nama">
                     </div>
                     <div class="form-group">
-                        <label for="ttl">Tanggal Lahir</label>
-                        <input type="date" name="ttl" class="form-control" id="ttl" value="{{ $Mahasiswa->ttl }}" aria-describedby="TTL">
+                        <label for="tgl_lahir">Tanggal Lahir</label>
+                        <input type="date" name="tgl_lahir" class="form-control" id="tgl_lahir" value="{{ $Mahasiswa->tgl_lahir }}" aria-describedby="tgl_lahir">
                     </div>
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <input type="text" name="kelas" class="form-control" id="kelas" value="{{ $Mahasiswa->kelas }}" aria-describedby="Kelas">
+                        <select name="kelas" class="form-control">
+                            @foreach($kelas as $Kelas)
+                            <option value={{$Kelas->id}}>{{$Kelas->nama_kelas}}</option>
+                            @endforeach
+                        </select>
+
                     </div>
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>

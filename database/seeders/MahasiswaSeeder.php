@@ -18,9 +18,11 @@ class MahasiswaSeeder extends Seeder
         DB::table('mahasiswas')->insert([
             'nim' => '2141720042',
             'nama' => 'Arainal Aldiansyah',
+            'tgl_lahir' => '2022-12-01',
             'kelas' => 'TI-2G',
             'jurusan' => 'Teknologi Informasi',
-            'no_hp' => '081391484458'
+            'no_hp' => '081391484458',
+            'email' => 'arainal@gmail.com'
             
         ]);
     }

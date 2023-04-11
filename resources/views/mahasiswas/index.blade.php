@@ -29,8 +29,8 @@
     <tr>
 
 <th>Nim</th>
-  <th>Nama</th>
-        <th>TTL</th>
+        <th>Nama</th>
+        <th>Tanggal lahir</th>
         <th>Kelas</th>
         <th>Jurusan</th>
         <th>E-mail</th>
@@ -41,8 +41,8 @@
     <tr>
         <td>{{ $Mahasiswa->nim }}</td>
         <td>{{ $Mahasiswa->nama }}</td>
-        <td>{{ $Mahasiswa->ttl }}</td>
-        <td>{{ $Mahasiswa->kelas }}</td>
+        <td>{{ $Mahasiswa->tgl_lahir }}</td>
+        <td>{{ $Mahasiswa->kelas->nama_kelas }}</td>
         <td>{{ $Mahasiswa->jurusan }}</td>
         <td>{{ $Mahasiswa->email }}</td>
         <td>{{ $Mahasiswa->no_hp }}</td>

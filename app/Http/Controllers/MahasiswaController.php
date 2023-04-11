@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use App\Models\Kelas; 
 use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
@@ -23,16 +24,14 @@ class MahasiswaController extends Controller
         } else {
             // $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
             $mahasiswas = Mahasiswa::orderBy('nim', 'desc')->paginate(5);
-            return view('mahasiswas.index', compact('mahasiswas'))
-            ->with('i', (request()->input('page', 1) - 1) * 5); 
+            return view('mahasiswas.index', compact('mahasiswas')); 
         }
-        
-        
     }
 
     public function create()
     {
-        return view('mahasiswas.create');
+        $kelas = Kelas::all(); // mendapatkan data dari kelas
+        return view('mahasiswas.create',['kelas'=>$kelas]);
     }
 
     /**
@@ -47,17 +46,39 @@ class MahasiswaController extends Controller
         $request->validate([
         'nim' => 'required',
         'nama' => 'required',
-        'ttl' => 'required',
+        'tgl_lahir' => 'required',
         'kelas' => 'required',
         'jurusan' => 'required',
         'email' => 'required',
         'no_hp' => 'required',
         ]);
-        //fungsi eloquent untuk menambah data
-        Mahasiswa::create($request->all());
-        //jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('mahasiswas.index')
-        ->with('success', 'Mahasiswa Berhasil Ditambahkan');
+        //jobsheet 7
+        // //fungsi eloquent untuk menambah data
+        // Mahasiswa::create($request->all());
+        // //jika data berhasil ditambahkan, akan kembali ke halaman utama
+        // return redirect()->route('mahasiswas.index')
+        // ->with('success', 'Mahasiswa Berhasil Ditambahkan');
+
+        //jobsheet 9
+        //Fungsi eloquent untuk tambah data
+        $mahasiswas= new Mahasiswa;
+        $mahasiswas->nim=$request->get('nim');
+        $mahasiswas->nama=$request->get('nama');
+        $mahasiswas->tgl_lahir=$request->get('tgl_lahir');
+        $mahasiswas->jurusan=$request->get('jurusan');
+        $mahasiswas->email=$request->get('email');
+        $mahasiswas->no_hp=$request->get('no_hp');
+        $mahasiswas->save();
+
+        //Unutk menambahkan dengan relasi belongs to
+        $kelas = new Kelas;
+        $kelas->id = $request->get('kelas');
+
+        $mahasiswas->kelas()->associate($kelas);
+        $mahasiswas->save();
+
+        //jika data berhasil
+        return redirect()->route('mahasiswas.index')->with('success', 'Mahasiswa Berhasil ditambahkan');
     }
 
     /**
@@ -83,7 +104,8 @@ class MahasiswaController extends Controller
     {
         //menampilkan detail data dengan menemukan berdasarkan Nim Mahasiswa untuk diedit
         $Mahasiswa = Mahasiswa::find($nim);
-        return view('mahasiswas.edit', compact('Mahasiswa'));
+        $kelas = Kelas::all();
+        return view('mahasiswas.edit', compact('Mahasiswa','kelas'));
     }
 
     /**
@@ -99,17 +121,38 @@ class MahasiswaController extends Controller
         $request->validate([
         'nim' => 'required',
         'nama' => 'required',
-        'ttl' => 'required',
+        'tgl_lahir' => 'required',
         'kelas' => 'required',
         'jurusan' => 'required',
         'email' => 'required',
         'no_hp' => 'required',
         ]);
-        //fungsi eloquent untuk mengupdate data inputan kita
-        Mahasiswa::find($nim)->update($request->all());
-        //jika data berhasil diupdate, akan kembali ke halaman utama
-        return redirect()->route('mahasiswas.index')
-        ->with('success', 'Mahasiswa Berhasil Diupdate');
+        // //fungsi eloquent untuk mengupdate data inputan kita
+        // Mahasiswa::find($nim)->update($request->all());
+        // //jika data berhasil diupdate, akan kembali ke halaman utama
+        // return redirect()->route('mahasiswas.index')
+        // ->with('success', 'Mahasiswa Berhasil Diupdate');
+        
+        //jobsheet 9
+        //Fungsi eloquent untuk tambah data
+        $mahasiswas=Mahasiswa::with('kelas')->where('nim',$nim)->first();
+        $mahasiswas->nim=$request->get('nim');
+        $mahasiswas->nama=$request->get('nama');
+        $mahasiswas->tgl_lahir=$request->get('tgl_lahir');
+        $mahasiswas->jurusan=$request->get('jurusan');
+        $mahasiswas->email=$request->get('email');
+        $mahasiswas->no_hp=$request->get('no_hp');
+        $mahasiswas->save();
+
+        //Unutk menambahkan dengan relasi belongs to
+        $kelas = new Kelas;
+        $kelas->id = $request->get('kelas');
+
+        $mahasiswas->kelas()->associate($kelas);
+        $mahasiswas->save();
+
+        //jika data berhasil
+        return redirect()->route('mahasiswas.index')->with('success', 'Mahasiswa Berhasil di Update');
     }
 
     /**
