@@ -28,7 +28,7 @@
 <table class="table table-bordered">
     <tr>
 
-<th>Nim</th>
+        <th>Nim</th>
         <th>Nama</th>
         <th>Tanggal lahir</th>
         <th>Kelas</th>
@@ -50,10 +50,11 @@
             <form action="{{ route('mahasiswas.destroy',$Mahasiswa->nim) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('mahasiswas.show',$Mahasiswa->nim) }}">Show</a>
                 <a class="btn btn-primary" href="{{ route('mahasiswas.edit',$Mahasiswa->nim) }}">Edit</a>
+                
                 @csrf
-
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Delete</button>
+                <a class="btn btn-warning" href="mahasiswas/nilai/{{$Mahasiswa->nim }}">Nilai</a>
             </form>
         </td>
     </tr>
