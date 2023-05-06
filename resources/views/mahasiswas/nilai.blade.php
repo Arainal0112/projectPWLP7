@@ -2,21 +2,15 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <div class="pull-left mt-2">
+        <div class="pull-left mt-2 text-center">
             <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
             <h1>KARTU HASIL STUDI (KHS)</h1>
         </div>
     </div>
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left mt-2">
-            <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
-            <h1>KARTU HASIL STUDI (KHS)</h1>
-        </div>
-    </div>
-    <ul class="list-group list-group-flush text-left mb-4">
-        <li class="list-group-item"><b>Nim : </b>{{$Mahasiswa->nim}}</li>
-        <li class="list-group-item"><b>Nama : </b>{{$Mahasiswa->nama}}</li>
-        <li class="list-group-item"><b>Kelas : </b>{{$Mahasiswa->kelas->nama_kelas}}</li>
+    <ul class="list-group list-group-flush text-left mb-4" style="list-style: none;" >
+        <li ><b>Nim : </b>{{$Mahasiswa->nim}}</li>
+        <li ><b>Nama : </b>{{$Mahasiswa->nama}}</li>
+        <li ><b>Kelas : </b>{{$Mahasiswa->kelas->nama_kelas}}</li>
     </ul>
 
 </div>
@@ -37,5 +31,8 @@
     </tr>
     @endforeach
 </table>
+<div class="my-2" align="center">
+    <a class="btn btn-primary" href="{{ route('cetak_khs',$Mahasiswa->nim) }}"> Cetak KHS </a>
+</div>
 @endsection
 
